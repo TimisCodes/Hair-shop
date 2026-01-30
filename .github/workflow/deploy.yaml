@@ -47,6 +47,6 @@ jobs:
               docker rm hair-shop-app
             fi
 
-            # Run new container
+            # Run new container now
             docker run -d -p 80:3000 --name hair-shop-app timiscode/hair-shop-app:latest
             echo "Deployment complete ✅"
