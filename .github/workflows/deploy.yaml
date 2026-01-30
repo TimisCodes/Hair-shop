@@ -34,7 +34,7 @@ jobs:
         uses: appleboy/ssh-action@v0.1.9
         with:
           host: ${{ secrets.EC2_HOST }}        # Your EC2 public IP
-          username: ec2-user                    # Or your EC2 user
+          username: ec2-user                    # Or my EC2 user
           key: ${{ secrets.EC2_KEY }}          # Private key from GitHub Secrets
           port: 22
           script: |
