@@ -1,0 +1,92 @@
+<%- include('partials/header') %>
+
+<main class="main-content">
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="/">Home</a>
+            <span>/</span>
+            <span><%= product.name %></span>
+        </div>
+        
+        <div class="product-detail">
+            <div class="product-detail-image">
+                <img src="<%= product.image_url %>" alt="<%= product.name %>" onerror="this.src='/uploads/placeholder.jpg'">
+            </div>
+            
+            <div class="product-detail-info">
+                <h1><%= product.name %></h1>
+                
+                <div class="product-price-large">
+                    ₦<%= Number(product.price).toLocaleString() %>
+                </div>
+                
+                <div class="product-specs">
+                    <div class="spec-item">
+                        <strong>Hair Type:</strong>
+                        <span><%= product.hair_type %></span>
+                    </div>
+                    <div class="spec-item">
+                        <strong>Length:</strong>
+                        <span><%= product.length %></span>
+                    </div>
+                    <div class="spec-item">
+                        <strong>Texture:</strong>
+                        <span><%= product.texture %></span>
+                    </div>
+                    <div class="spec-item">
+                        <strong>Color:</strong>
+                        <span><%= product.color %></span>
+                    </div>
+                    <div class="spec-item">
+                        <strong>Stock:</strong>
+                        <span class="<%= product.stock_quantity > 0 ? 'text-success' : 'text-danger' %>">
+                            <%= product.stock_quantity > 0 ? product.stock_quantity + ' Available' : 'Out of Stock' %>
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="product-description">
+                    <h3>Description</h3>
+                    <p><%= product.description || 'Premium quality hair extension, perfect for any occasion.' %></p>
+                </div>
+                
+                <form action="/cart/add" method="POST" class="add-to-cart-detail">
+                    <input type="hidden" name="productId" value="<%= product.id %>">
+                    
+                    <div class="quantity-selector">
+                        <label>Quantity:</label>
+                        <div class="quantity-input">
+                            <button type="button" onclick="decrementQuantity()">-</button>
+                            <input type="number" name="quantity" id="quantity" value="1" min="1" max="<%= product.stock_quantity %>">
+                            <button type="button" onclick="incrementQuantity(<%= product.stock_quantity %>)">+</button>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-large" <%= product.stock_quantity === 0 ? 'disabled' : '' %>>
+                        <i class="fas fa-cart-plus"></i> Add to Cart
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    function incrementQuantity(max) {
+        const input = document.getElementById('quantity');
+        const currentValue = parseInt(input.value);
+        if (currentValue < max) {
+            input.value = currentValue + 1;
+        }
+    }
+    
+    function decrementQuantity() {
+        const input = document.getElementById('quantity');
+        const currentValue = parseInt(input.value);
+        if (currentValue > 1) {
+            input.value = currentValue - 1;
+        }
+    }
+</script>
+
+<%- include('partials/footer') %>

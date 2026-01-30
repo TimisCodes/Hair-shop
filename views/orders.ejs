@@ -1,0 +1,43 @@
+<%- include('partials/header') %>
+
+<main class="main-content">
+    <div class="container">
+        <h1 class="page-title">My Orders</h1>
+        
+        <% if (orders.length === 0) { %>
+            <div class="empty-state">
+                <i class="fas fa-box-open"></i>
+                <h2>No orders yet</h2>
+                <p>Start shopping to see your orders here</p>
+                <a href="/" class="btn btn-primary">Shop Now</a>
+            </div>
+        <% } else { %>
+            <div class="orders-list">
+                <% orders.forEach(order => { %>
+                    <div class="order-card">
+                        <div class="order-header">
+                            <div>
+                                <h3>Order #<%= order.id %></h3>
+                                <p class="order-date"><%= new Date(order.created_at).toLocaleDateString() %></p>
+                            </div>
+                            <div>
+                                <span class="badge badge-<%= order.status %>"><%= order.status %></span>
+                                <span class="badge badge-<%= order.payment_status %>"><%= order.payment_status %></span>
+                            </div>
+                        </div>
+                        
+                        <div class="order-body">
+                            <div class="order-info">
+                                <p><strong>Items:</strong> <%= order.item_count %></p>
+                                <p><strong>Total:</strong> ₦<%= Number(order.total_amount).toLocaleString() %></p>
+                            </div>
+                            <a href="/orders/<%= order.id %>" class="btn btn-sm">View Details</a>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } %>
+    </div>
+</main>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,47 @@
+<nav class="navbar">
+    <div class="container">
+        <div class="nav-brand">
+            <a href="/">
+                <i class="fas fa-cut"></i>
+                <span>Hair Shop</span>
+            </a>
+        </div>
+        
+        <div class="nav-menu" id="navMenu">
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                
+                <% if (user) { %>
+                    <li><a href="/orders">My Orders</a></li>
+                    
+                    <% if (user.is_admin) { %>
+                        <li><a href="/admin/dashboard">Admin</a></li>
+                    <% } %>
+                    
+                    <li class="nav-user">
+                        <span>Hello, <%= user.first_name %></span>
+                        <a href="/auth/logout" class="btn-logout">Logout</a>
+                    </li>
+                <% } else { %>
+                    <li><a href="/auth/login">Login</a></li>
+                    <li><a href="/auth/register" class="btn-register">Register</a></li>
+                <% } %>
+                
+                <li>
+                    <a href="/cart" class="cart-link">
+                        <i class="fas fa-shopping-cart"></i>
+                        <% if (cart.totalQuantity > 0) { %>
+                            <span class="cart-badge"><%= cart.totalQuantity %></span>
+                        <% } %>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="nav-toggle" id="navToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</nav>

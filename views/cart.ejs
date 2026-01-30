@@ -1,0 +1,74 @@
+<%- include('partials/header') %>
+
+<main class="main-content">
+    <div class="container">
+        <h1 class="page-title">Shopping Cart</h1>
+        
+        <% if (cart.items.length === 0) { %>
+            <div class="empty-cart">
+                <i class="fas fa-shopping-cart"></i>
+                <h2>Your cart is empty</h2>
+                <p>Add some products to get started!</p>
+                <a href="/" class="btn btn-primary">Continue Shopping</a>
+            </div>
+        <% } else { %>
+            <div class="cart-content">
+                <div class="cart-items">
+                    <% cart.items.forEach(item => { %>
+                        <div class="cart-item">
+                            <img src="<%= item.imageUrl %>" alt="<%= item.productName %>" onerror="this.src='/uploads/placeholder.jpg'">
+                            
+                            <div class="cart-item-details">
+                                <h3><%= item.productName %></h3>
+                                <p class="cart-item-meta"><%= item.length %> | <%= item.hairType %></p>
+                                <p class="cart-item-price">₦<%= Number(item.price).toLocaleString() %></p>
+                            </div>
+                            
+                            <div class="cart-item-actions">
+                                <form action="/cart/update" method="POST" class="quantity-form">
+                                    <input type="hidden" name="productId" value="<%= item.productId %>">
+                                    <input type="number" name="quantity" value="<%= item.quantity %>" min="1" onchange="this.form.submit()">
+                                </form>
+                                
+                                <a href="/cart/remove/<%= item.productId %>" class="btn-remove" onclick="return confirm('Remove this item from cart?')">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
+                            
+                            <div class="cart-item-total">
+                                ₦<%= Number(item.price * item.quantity).toLocaleString() %>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+                
+                <div class="cart-summary">
+                    <h3>Order Summary</h3>
+                    
+                    <div class="summary-row">
+                        <span>Subtotal (<%= cart.totalQuantity %> items):</span>
+                        <span>₦<%= Number(cart.totalPrice).toLocaleString() %></span>
+                    </div>
+                    
+                    <div class="summary-row">
+                        <span>Delivery:</span>
+                        <span>Calculated at checkout</span>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="summary-row summary-total">
+                        <strong>Total:</strong>
+                        <strong>₦<%= Number(cart.totalPrice).toLocaleString() %></strong>
+                    </div>
+                    
+                    <a href="/checkout" class="btn btn-primary btn-block">Proceed to Checkout</a>
+                    <a href="/" class="btn btn-secondary btn-block">Continue Shopping</a>
+                    <a href="/cart/clear" class="btn-text" onclick="return confirm('Clear entire cart?')">Clear Cart</a>
+                </div>
+            </div>
+        <% } %>
+    </div>
+</main>
+
+<%- include('partials/footer') %>

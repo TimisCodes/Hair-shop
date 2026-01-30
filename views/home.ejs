@@ -1,0 +1,123 @@
+<%- include('partials/header') %>
+
+<main class="main-content">
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Premium Quality Hair</h1>
+                <p>Discover our exclusive collection of the finest hair extensions</p>
+                <a href="#products" class="btn btn-primary">Shop Now</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Filter Section -->
+    <section class="filters">
+        <div class="container">
+            <form action="/" method="GET" class="filter-form">
+                <div class="filter-group">
+                    <label>Hair Type:</label>
+                    <select name="hairType" onchange="this.form.submit()">
+                        <option value="">All Types</option>
+                        <option value="Brazilian" <%= filters.hairType === 'Brazilian' ? 'selected' : '' %>>Brazilian</option>
+                        <option value="Peruvian" <%= filters.hairType === 'Peruvian' ? 'selected' : '' %>>Peruvian</option>
+                        <option value="Malaysian" <%= filters.hairType === 'Malaysian' ? 'selected' : '' %>>Malaysian</option>
+                        <option value="Indian" <%= filters.hairType === 'Indian' ? 'selected' : '' %>>Indian</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label>Texture:</label>
+                    <select name="texture" onchange="this.form.submit()">
+                        <option value="">All Textures</option>
+                        <option value="Straight" <%= filters.texture === 'Straight' ? 'selected' : '' %>>Straight</option>
+                        <option value="Body Wave" <%= filters.texture === 'Body Wave' ? 'selected' : '' %>>Body Wave</option>
+                        <option value="Deep Wave" <%= filters.texture === 'Deep Wave' ? 'selected' : '' %>>Deep Wave</option>
+                        <option value="Curly" <%= filters.texture === 'Curly' ? 'selected' : '' %>>Curly</option>
+                    </select>
+                </div>
+                
+                <% if (filters.hairType || filters.texture) { %>
+                    <a href="/" class="btn-clear-filters">Clear Filters</a>
+                <% } %>
+            </form>
+        </div>
+    </section>
+    
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <div class="container">
+            <h2 class="section-title">Our Products</h2>
+            
+            <% if (products.length === 0) { %>
+                <div class="no-products">
+                    <i class="fas fa-box-open"></i>
+                    <p>No products found</p>
+                </div>
+            <% } else { %>
+                <div class="product-grid">
+                    <% products.forEach(product => { %>
+                        <div class="product-card">
+                            <a href="/products/<%= product.id %>" class="product-image">
+                                <img src="<%= product.image_url %>" alt="<%= product.name %>" onerror="this.src='/uploads/placeholder.jpg'">
+                                <% if (product.stock_quantity < 10 && product.stock_quantity > 0) { %>
+                                    <span class="badge badge-warning">Low Stock</span>
+                                <% } else if (product.stock_quantity === 0) { %>
+                                    <span class="badge badge-danger">Out of Stock</span>
+                                <% } %>
+                            </a>
+                            
+                            <div class="product-info">
+                                <h3><a href="/products/<%= product.id %>"><%= product.name %></a></h3>
+                                <p class="product-meta">
+                                    <%= product.length %> | <%= product.texture %>
+                                </p>
+                                <div class="product-footer">
+                                    <span class="product-price">₦<%= Number(product.price).toLocaleString() %></span>
+                                    <form action="/cart/add" method="POST" class="add-to-cart-form">
+                                        <input type="hidden" name="productId" value="<%= product.id %>">
+                                        <input type="hidden" name="quantity" value="1">
+                                        <button type="submit" class="btn btn-sm" <%= product.stock_quantity === 0 ? 'disabled' : '' %>>
+                                            <i class="fas fa-cart-plus"></i> Add to Cart
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            <% } %>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature">
+                    <i class="fas fa-truck"></i>
+                    <h3>Fast Delivery</h3>
+                    <p>Quick delivery across Nigeria</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Secure Payment</h3>
+                    <p>100% secure transactions</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-star"></i>
+                    <h3>Quality Products</h3>
+                    <p>Premium quality guaranteed</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-headset"></i>
+                    <h3>24/7 Support</h3>
+                    <p>Always here to help</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<%- include('partials/footer') %>

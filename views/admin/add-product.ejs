@@ -1,0 +1,93 @@
+<%- include('../partials/header') %>
+
+<main class="main-content">
+    <div class="container">
+        <h1 class="page-title">Add New Product</h1>
+        
+        <div class="form-container">
+            <form action="/admin/products/add" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="name">Product Name *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" rows="4"></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="price">Price (₦) *</label>
+                        <input type="number" id="price" name="price" step="0.01" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="stockQuantity">Stock Quantity *</label>
+                        <input type="number" id="stockQuantity" name="stockQuantity" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="hairType">Hair Type *</label>
+                        <select id="hairType" name="hairType" required>
+                            <option value="">Select Type</option>
+                            <option value="Brazilian">Brazilian</option>
+                            <option value="Peruvian">Peruvian</option>
+                            <option value="Malaysian">Malaysian</option>
+                            <option value="Indian">Indian</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="length">Length *</label>
+                        <select id="length" name="length" required>
+                            <option value="">Select Length</option>
+                            <option value="10 inches">10 inches</option>
+                            <option value="12 inches">12 inches</option>
+                            <option value="14 inches">14 inches</option>
+                            <option value="16 inches">16 inches</option>
+                            <option value="18 inches">18 inches</option>
+                            <option value="20 inches">20 inches</option>
+                            <option value="22 inches">22 inches</option>
+                            <option value="24 inches">24 inches</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="texture">Texture *</label>
+                        <select id="texture" name="texture" required>
+                            <option value="">Select Texture</option>
+                            <option value="Straight">Straight</option>
+                            <option value="Body Wave">Body Wave</option>
+                            <option value="Deep Wave">Deep Wave</option>
+                            <option value="Curly">Curly</option>
+                            <option value="Kinky">Kinky</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="color">Color *</label>
+                        <input type="text" id="color" name="color" placeholder="e.g., Natural Black" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="image">Product Image</label>
+                    <input type="file" id="image" name="image" accept="image/*">
+                    <small>Max file size: 5MB. Accepted formats: JPG, PNG, GIF</small>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Add Product</button>
+                    <a href="/admin/products" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+<%- include('../partials/footer') %>
