@@ -1,18 +1,22 @@
-# Use official Node.js LTS image
-FROM node:20
+FROM node:20-alpine
 
-# Set working directory
+# Create app directory
 WORKDIR /app
 
-# Copy package files and install dependencies
+# Copy package files
 COPY package*.json ./
-RUN npm install
 
-# Copy all project files
+# Install dependencies
+RUN npm install --production
+
+# Copy app source
 COPY . .
 
-# Expose port your app runs on
+# Create uploads folder if missing
+RUN mkdir -p public/uploads
+
+# Expose app port
 EXPOSE 3000
 
-# Start the app using PM2 or directly
-CMD ["node", "server.js"]   # change server.js if your entry file is different
+# Start app
+CMD ["node", "server.js"]
